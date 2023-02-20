@@ -5,6 +5,7 @@ apiVersion: 1
 deleteDatasources:
   - name: Prometheus
     orgId: 1
+  - name: Postgresy
 
 # list of datasources to insert/update depending
 # what's available in the database
@@ -48,3 +49,28 @@ datasources:
   version: 1
   # <bool> allow users to edit datasources from the UI.
   editable: true
+
+- name: Postgres  #<string, required> name of the datasource
+  type: postgres  #<string, required> datasource type
+  access: direct #<string, required> access mode
+  # uid: my_unique_uid'  #<string> custom UID, can be used to reference this datasource in other parts of the config
+  url: postgres_db:5432
+  user: admin  #<string> database user, if used
+  database: ualive  #<string> database name, if used
+  basicAuth: true #<bool> enable/disable basic auth
+  basicAuthUser: admin  #<string> basic auth username
+  withCredentials: false  #<bool> enable/disable with credentials headers
+  # isDefault: true #<bool> mark as default datasource
+
+  # <map> fields that will be converted to json and stored in jsonData
+  jsonData:
+  # postgreSQLVersion: '15.2'
+    tlsAuth: false
+    tlsAuthWithCACert: false
+    sslmode: "disable"
+  # <string> json object of data that will be encrypted.
+  secureJsonData:
+    password: "Landesamt12345!"  #<string> database password, if used
+    basicAuthPassword: "admin"  #<string> basic auth password
+  version: 1
+  editable: true #<bool> allow users to edit datasources from the UI

@@ -25,7 +25,7 @@ docker-compose -f $DIR/zk-kafka-single-node-stack.yml up -d
 docker-compose -f $DIR/zk-kafka-single-node-stack.yml ps
 
 echo -e "\n------------------------------------------------------------------------------------------------------"
-echo -e "Grafana (Login : admin / Password : kafka) : http://localhost:3000"
+echo -e "Grafana (Login : admin / Password : kafka) : http://localhost:3001"
 echo -e "Prometheus : http://localhost:9090"
 echo -e "\n------------------------------------------------------------------------------------------------------"
 

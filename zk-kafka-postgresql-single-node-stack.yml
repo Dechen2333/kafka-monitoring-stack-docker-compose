@@ -21,12 +21,38 @@ services:
     environment:
       GF_PATHS_DATA : /var/lib/grafana
       GF_SECURITY_ADMIN_PASSWORD : kafka
+      GF_INSTALL_PLUGINS: grafana-worldmap-panel,hamedkarbasi93-kafka-datasource #install kafka data source
     volumes:
      - ./grafana/provisioning:/etc/grafana/provisioning
      - ./grafana/dashboards:/var/lib/grafana/dashboards
     container_name: grafana101
     depends_on:
      - prometheus
+     - postgres_db
+
+  postgres_db:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ualive
+    depends_on:
+      - zk1
+      - kafka101
+
+  pgadmin4:
+    image: dpage/pgadmin4
+    # restart: always
+    ports:
+      - "50501:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: dechen@tmd.de
+      PGADMIN_DEFAULT_PASSWORD: password
+    container_name: pgadmin4
+    depends_on:
+      - postgres_db
 
   prometheus:
     image: "prom/prometheus:${PROMETHEUS_VERSION}"
